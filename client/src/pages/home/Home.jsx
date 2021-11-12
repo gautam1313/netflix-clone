@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const Home = ({ type }) => {
-  const tokenID =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODhmNWE4NTIyMzc5YTZlZTBkZWVmNCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjU0OTgxNiwiZXhwIjoxNjM3MTU0NjE2fQ.-2RfSB2_7k0wD4kiQwnYet8CZcP4-nEfR3TOzw2c1w0";
   const [lists, setLists] = useState([]);
   const [genre, setGenre] = useState(null);
 
@@ -20,7 +18,7 @@ const Home = ({ type }) => {
           }`,
           {
             headers: {
-              token: `Bearer ${tokenID}`,
+              token: `Bearer ${process.env.REACT_APP_TOKENID}`,
             },
           }
         );
