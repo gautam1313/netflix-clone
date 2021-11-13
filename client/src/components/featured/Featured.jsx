@@ -1,7 +1,29 @@
 import { InfoOutlined, PlayArrow } from "@material-ui/icons";
+import { useEffect, useState } from "react";
 import "./featured.scss";
+import axios from "axios";
 
 const Featured = ({ type }) => {
+  const [content, setContent] = useState({});
+
+  useEffect(() => {
+    const getRandomContent = async () => {
+      const isApiSubscribed = true;
+      if (isApiSubscribed) {
+        const res = await axios.get(`/movies/random?type=${type}`, {
+          headers: {
+            token: `Bearer ${process.env.REACT_APP_TOKENID}`,
+          },
+        });
+        setContent(res.data[0]);
+      }
+      return () => {
+        isApiSubscribed = false;
+      };
+    };
+    getRandomContent();
+  }, [type]);
+
   return (
     <div className="featured">
       {type && (
@@ -25,18 +47,10 @@ const Featured = ({ type }) => {
           </select>
         </div>
       )}
-      <img src="https://wallpapercave.com/wp/wp4098997.jpg" alt="" />
+      <img src={content?.img} alt="" />
       <div className="info">
-        <img
-          src="https://occ-0-1432-1433.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABUZdeG1DrMstq-YKHZ-dA-cx2uQN_YbCYx7RABDk0y7F8ZK6nzgCz4bp5qJVgMizPbVpIvXrd4xMBQAuNe0xmuW2WjoeGMDn1cFO.webp?r=df1"
-          alt=""
-        />
-        <span className="desc">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore,
-          nemo officia alias ratione, nostrum harum, similique soluta
-          reprehenderit nesciunt eaque molestiae id quis corporis voluptate
-          excepturi qui. Sint, ipsa autem?
-        </span>
+        <img src={content?.imgTitle} alt="" />
+        <span className="desc">{content?.desc}</span>
         <div className="buttons">
           <button className="play">
             <PlayArrow />
