@@ -29,7 +29,7 @@ function App() {
           <Route path="/newUser" exact>
             <NewUser />
           </Route>
-          <Route path="/products" exact>
+          <Route path="/movies" exact>
             <ProductList />
           </Route>
           <Route path="/products/:productId" exact>
