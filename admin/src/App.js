@@ -10,20 +10,24 @@ import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
+import { useContext } from "react";
+import { AuthContext } from "./context/authContext/AuthContext";
 
 function App() {
-  const isLoggedOut = true;
+  const { user } = useContext(AuthContext);
   return (
-    <>
-      {isLoggedOut ? (
-        <Login />
-      ) : (
-        <Router>
-          <Topbar />
-          <div className="container">
-            <Sidebar />
-            <Switch>
-              <Route path="/" exact>
+    <Router>
+      <Switch>
+        {user === null ? (
+          <Route path="/" exact>
+            <Login />
+          </Route>
+        ) : (
+          <>
+            <Topbar />
+            <div className="container">
+              <Sidebar />
+              <Route path="/home" exact>
                 <Home />
               </Route>
               <Route path="/users" exact>
@@ -44,11 +48,11 @@ function App() {
               <Route path="/newProduct" exact>
                 <NewProduct />
               </Route>
-            </Switch>
-          </div>
-        </Router>
-      )}
-    </>
+            </div>
+          </>
+        )}
+      </Switch>
+    </Router>
   );
 }
 
