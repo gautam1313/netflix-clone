@@ -32,7 +32,9 @@ const Home = () => {
       if (isApiSubscribed) {
         const res = await axios.get(`/users/stats`, {
           headers: {
-            token: `Bearer ${process.env.REACT_APP_TOKENID}`,
+            token: `Bearer ${
+              JSON.parse(localStorage.getItem("user")).accessToken
+            }`,
           },
         });
         const sortedStats = res.data.sort(function (a, b) {
