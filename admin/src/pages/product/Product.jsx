@@ -1,47 +1,40 @@
-import { Link } from "react-router-dom";
-import Chart from "../../components/chart/Chart";
+import { Link, useLocation } from "react-router-dom";
 import "./product.css";
-import { productData } from "../../dummyData";
 import { Publish } from "@material-ui/icons";
 
 const Product = () => {
+  const location = useLocation();
+  const movie = location.movie;
   return (
     <div className="product">
       <div className="productTitleContainer">
-        <h1 className="productTitle">Product</h1>
+        <h1 className="productTitle">Movie</h1>
         <Link to="/newProduct">
           <button className="productAddButton">Create</button>
         </Link>
       </div>
       <div className="productTop">
-        <div className="productTopLeft">
-          <Chart title="Quarter Sales" data={productData} dataKey="Sales" />
-        </div>
         <div className="productTopRight">
           <div className="productInfoTop">
-            <img
-              src="https://www.gizchina.com/wp-content/uploads/images/2021/05/concept-nintendo-switch.jpeg"
-              alt=""
-              className="productInfoImg"
-            />
-            <span className="productName">Nintendo Switch</span>
+            <img src={movie.img} alt="" className="productInfoImg" />
+            <span className="productName">{movie.title}</span>
           </div>
           <div className="productInfoBottom">
             <div className="productInfoItem">
               <span className="productInfoKey">id:</span>
-              <span className="productInfoValue">111</span>
+              <span className="productInfoValue">{movie._id}</span>
             </div>
             <div className="productInfoItem">
-              <span className="productInfoKey">sales:</span>
-              <span className="productInfoValue">324</span>
+              <span className="productInfoKey">genre:</span>
+              <span className="productInfoValue">{movie.genre}</span>
             </div>
             <div className="productInfoItem">
-              <span className="productInfoKey">active:</span>
-              <span className="productInfoValue">yes</span>
+              <span className="productInfoKey">year:</span>
+              <span className="productInfoValue">{movie.year}</span>
             </div>
             <div className="productInfoItem">
-              <span className="productInfoKey">in stock:</span>
-              <span className="productInfoValue">no</span>
+              <span className="productInfoKey">limit:</span>
+              <span className="productInfoValue">{movie.limit}</span>
             </div>
           </div>
         </div>
@@ -49,27 +42,23 @@ const Product = () => {
       <div className="productBottom">
         <form className="productForm">
           <div className="productFormLeft">
-            <label>Product Name</label>
-            <input type="text" placeholder="Nintendo Switch" />
-            <label>In Stock</label>
-            <select name="inStock" id="inStock">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-            <label>Active</label>
-            <select name="active" id="active">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
+            <label>Movie Name</label>
+            <input type="text" placeholder={movie.title} />
+            <label>Year</label>
+            <input type="text" placeholder={movie.year} />
+            <label>Genre</label>
+            <input type="text" placeholder={movie.genre} />
+            <label>Limit</label>
+            <input type="text" placeholder={movie.limit} />
+            <label>Trailer</label>
+            <input type="file" placeholder={movie.trailer} />
+            <label>Video</label>
+            <input type="file" placeholder={movie.video} />
           </div>
           <div className="productFormRight">
             <div className="productUpload">
-              <img
-                src="https://www.gizchina.com/wp-content/uploads/images/2021/05/concept-nintendo-switch.jpeg"
-                alt=""
-                className="productUploadImg"
-              />
-              <label for="file">
+              <img src={movie.img} alt="" className="productUploadImg" />
+              <label htmlFor="file">
                 <Publish />
               </label>
               <input type="file" id="file" style={{ display: "none" }} />
