@@ -12,7 +12,9 @@ const WidgetSm = () => {
       if (isApiSubscribed) {
         const res = await axios.get("/users?new=true", {
           headers: {
-            token: `Bearer ${process.env.REACT_APP_TOKENID}`,
+            token: `Bearer ${
+              JSON.parse(localStorage.getItem("user")).accessToken
+            }`,
           },
         });
         setNewUsers(res.data);
