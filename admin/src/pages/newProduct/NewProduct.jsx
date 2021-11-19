@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./newProduct.css";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import storage from "../../firebase";
+import { createMovie } from "../../context/movieContext/apiCalls";
+import { MovieContext } from "../../context/movieContext/MovieContext";
 
 const NewProduct = () => {
   const [movie, setMovie] = useState(null);
@@ -10,12 +14,40 @@ const NewProduct = () => {
   const [video, setVideo] = useState(null);
   const [uploaded, setUploaded] = useState(0);
 
+  const { dispatch } = useContext(MovieContext);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
   };
 
-  const upload = (items) => {};
+  const upload = (items) => {
+    items.forEach((item) => {
+      const fileName = new Date().getTime() + item.label + item.file.name;
+      const storageRef = ref(storage, `/items/${fileName}`);
+      const uploadTask = uploadBytesResumable(storageRef, item.file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          let progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Uploading... " + parseInt(progress) + "%");
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setMovie((prev) => {
+              return { ...prev, [item.label]: url };
+            });
+            setUploaded((prev) => prev + 1);
+          });
+        }
+      );
+    });
+  };
 
   const handleUpload = (e) => {
     e.preventDefault();
@@ -27,6 +59,13 @@ const NewProduct = () => {
       { file: video, label: "video" },
     ]);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createMovie(movie, dispatch);
+  };
+
+  console.log(movie);
 
   return (
     <div className="newProduct">
@@ -137,7 +176,9 @@ const NewProduct = () => {
           />
         </div>
         {uploaded === 5 ? (
-          <button className="addProductButton">Create</button>
+          <button className="addProductButton" onClick={handleSubmit}>
+            Create
+          </button>
         ) : (
           <button className="addProductButton" onClick={handleUpload}>
             Upload
