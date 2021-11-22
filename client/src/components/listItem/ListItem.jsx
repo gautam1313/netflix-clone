@@ -17,11 +17,13 @@ const ListItem = ({ index, item }) => {
 
   useEffect(() => {
     const getMovie = async () => {
-      const isApiSubscribed = true;
+      let isApiSubscribed = true;
       if (isApiSubscribed) {
         const res = await axios.get("/movies/find/" + item, {
           headers: {
-            token: `Bearer ${process.env.REACT_APP_TOKENID}`,
+            token: `Bearer ${
+              JSON.parse(localStorage.getItem("user")).accessToken
+            }`,
           },
         });
         setMovie(res.data);
