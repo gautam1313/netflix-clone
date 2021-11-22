@@ -8,11 +8,13 @@ const Featured = ({ type, setGenre }) => {
 
   useEffect(() => {
     const getRandomContent = async () => {
-      const isApiSubscribed = true;
+      let isApiSubscribed = true;
       if (isApiSubscribed) {
         const res = await axios.get(`/movies/random?type=${type}`, {
           headers: {
-            token: `Bearer ${process.env.REACT_APP_TOKENID}`,
+            token: `Bearer ${
+              JSON.parse(localStorage.getItem("user")).accessToken
+            }`,
           },
         });
         setContent(res.data[0]);
