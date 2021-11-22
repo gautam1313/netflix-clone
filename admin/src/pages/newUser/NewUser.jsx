@@ -1,27 +1,58 @@
+import { useContext, useState } from "react";
+import { createUser } from "../../context/userContext/apiCalls";
 import "./newUser.css";
+import { UserContext } from "../../context/userContext/UserContext";
 
 const NewUser = () => {
+  const [newUser, setnewUser] = useState(null);
+  const { dispatch } = useContext(UserContext);
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setnewUser({ ...newUser, [e.target.name]: value });
+  };
+  console.log(newUser);
+  const create = (e) => {
+    e.preventDefault();
+    createUser(newUser, dispatch);
+  };
+
   return (
     <div className="newUser">
       <h1 className="newUserTitle">New User</h1>
       <form className="newUserForm">
         <div className="newUserItem">
           <label>Username</label>
-          <input type="text" placeholder="john" />
+          <input
+            type="text"
+            name="username"
+            placeholder="john"
+            onChange={handleChange}
+          />
         </div>
-        <div className="newUserItem">
+        {/* <div className="newUserItem">
           <label>Full Name</label>
           <input type="text" placeholder="John Doe" />
-        </div>
+        </div> */}
         <div className="newUserItem">
           <label>Email</label>
-          <input type="email" placeholder="john@doe.com" />
+          <input
+            type="email"
+            name="email"
+            placeholder="john@doe.com"
+            onChange={handleChange}
+          />
         </div>
         <div className="newUserItem">
           <label>Password</label>
-          <input type="password" placeholder="password" />
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            onChange={handleChange}
+          />
         </div>
-        <div className="newUserItem">
+        {/* <div className="newUserItem">
           <label>Phone</label>
           <input type="text" placeholder="+ 12 345 678" />
         </div>
@@ -39,15 +70,31 @@ const NewUser = () => {
             <input type="radio" name="gender" id="other" value="other" />
             <label htmlFor="other">Other</label>
           </div>
-        </div>
+        </div> */}
         <div className="newUserItem">
-          <label>Active</label>
-          <select name="active" id="active" className="newUserSelect">
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+          <label>Is Admin</label>
+          <select
+            name="isAdmin"
+            id="isAdmin"
+            className="newUserSelect"
+            onChange={handleChange}
+          >
+            <option value="false">No</option>
+            <option value="true">Yes</option>
           </select>
         </div>
-        <button className="newUserButton">Create</button>
+        <div className="newUserItem">
+          <label>Image Url</label>
+          <input
+            type="text"
+            name="profilePic"
+            placeholder="Paste image url here"
+            onChange={handleChange}
+          />
+        </div>
+        <button className="newUserButton" onClick={create}>
+          Create
+        </button>
       </form>
     </div>
   );

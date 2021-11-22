@@ -6,10 +6,14 @@ import {
   PhoneAndroid,
   Publish,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./user.css";
+import Moment from "moment";
 
 const User = () => {
+  const location = useLocation();
+  const user = location.user;
+  console.log(user);
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -22,37 +26,42 @@ const User = () => {
         <div className="userShow">
           <div className="userShowTop">
             <img
-              src="https://i.pinimg.com/474x/58/78/e7/5878e72e50eefcc7ac7119c256f0949d.jpg"
+              src={
+                user.profilePic
+                  ? user.profilePic
+                  : "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA="
+              }
               alt=""
               className="userShowImg"
             />
             <div className="userShowTopTitle">
-              <span className="userShowUsername">Ayrton Senna</span>
-              <span className="userShowUserTitle">F1 Legend</span>
+              <span className="userShowUsername">{user.username}</span>
             </div>
           </div>
           <div className="userShowBottom">
             <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">senna60</span>
+              <span className="userShowInfoTitle">{user.username}</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
-              <span className="userShowInfoTitle">01.01.1960</span>
+              <span className="userShowInfoTitle">
+                {Moment(user.createdAt).format("DD-MM-YYYY")}
+              </span>
             </div>
             <span className="userShowTitle">Contact Details</span>
             <div className="userShowInfo">
               <PhoneAndroid className="userShowIcon" />
-              <span className="userShowInfoTitle">+55 3432 2221</span>
+              <span className="userShowInfoTitle">+91 **** ****</span>
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">senMclrn@f1.com</span>
+              <span className="userShowInfoTitle">{user.email}</span>
             </div>
             <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">Sao Paulo | Brazil</span>
+              <span className="userShowInfoTitle">Earth | Milkyway</span>
             </div>
           </div>
         </div>
@@ -64,7 +73,7 @@ const User = () => {
                 <label>Username</label>
                 <input
                   type="text"
-                  placeholder="senna60"
+                  placeholder={user.username}
                   className="userUpdateInput"
                 />
               </div>
@@ -72,7 +81,7 @@ const User = () => {
                 <label>Full Name</label>
                 <input
                   type="text"
-                  placeholder="Ayrton Senna"
+                  placeholder={user.username}
                   className="userUpdateInput"
                 />
               </div>
@@ -80,7 +89,7 @@ const User = () => {
                 <label>Phone</label>
                 <input
                   type="text"
-                  placeholder="+55 3432 2221"
+                  placeholder="+91 **** ****"
                   className="userUpdateInput"
                 />
               </div>
@@ -88,7 +97,7 @@ const User = () => {
                 <label>Address</label>
                 <input
                   type="text"
-                  placeholder="Sao Paulo | Brazil"
+                  placeholder="Earth | Milkyway"
                   className="userUpdateInput"
                 />
               </div>
@@ -96,7 +105,11 @@ const User = () => {
             <div className="userUpdateRight">
               <div className="userUpdateUpload">
                 <img
-                  src="https://i.pinimg.com/474x/58/78/e7/5878e72e50eefcc7ac7119c256f0949d.jpg"
+                  src={
+                    user.profilePic
+                      ? user.profilePic
+                      : "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA="
+                  }
                   alt=""
                   className="userUpdateImg"
                 />
