@@ -11,25 +11,34 @@ const Home = ({ type }) => {
 
   useEffect(() => {
     const getRandomLists = async () => {
-      try {
-        const res = await axios.get(
-          `lists${type ? "?type=" + type : ""}${
-            genre ? "&genre=" + genre : ""
-          }`,
-          {
-            headers: {
-              token: `Bearer ${process.env.REACT_APP_TOKENID}`,
-            },
-          }
-        );
-        setLists(res.data);
-      } catch (error) {
-        console.log(error);
+      let isApiSubscribed = true;
+
+      if (isApiSubscribed) {
+        try {
+          const res = await axios.get(
+            `lists${type ? "?type=" + type : ""}${
+              genre ? "&genre=" + genre : ""
+            }`,
+            {
+              headers: {
+                token: `Bearer ${
+                  JSON.parse(localStorage.getItem("user")).accessToken
+                }`,
+              },
+            }
+          );
+          setLists(res.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
+
+      return () => {
+        isApiSubscribed = false;
+      };
     };
     getRandomLists();
   }, [type, genre]);
-  console.log(lists);
 
   return (
     <div className="home">
