@@ -1,10 +1,18 @@
 import { ArrowDropDown, Notifications, Search } from "@material-ui/icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { logout } from "../../authContext/AuthActions";
+import { AuthContext } from "../../authContext/AuthContext";
 import "./navbar.scss";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const {
+    dispatch,
+    user: { profilePic },
+  } = useContext(AuthContext);
+
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
@@ -34,12 +42,12 @@ const Navbar = () => {
           <Search className="icon" />
           <span>Hello</span>
           <Notifications className="icon" />
-          <img src="https://wallpapercave.com/wp/wp4098997.jpg" alt="" />
+          <img src={profilePic} alt="" />
           <div className="profile">
             <ArrowDropDown className="icon" />
             <div className="options">
               <span>Settings</span>
-              <span>Logout</span>
+              <span onClick={() => dispatch(logout())}>Logout</span>
             </div>
           </div>
         </div>
