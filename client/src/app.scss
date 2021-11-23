@@ -6,3 +6,15 @@
   text-decoration: none;
   color: inherit;
 }
+
+@mixin tab {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 375px) {
+    @content;
+  }
+}

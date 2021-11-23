@@ -1,3 +1,5 @@
+@import "../../app.scss";
+
 .navbar {
   color: white;
   font-size: 14px;
@@ -18,6 +20,10 @@
     justify-content: space-between;
     height: 70px;
 
+    @include mobile {
+      padding: 0 28px;
+    }
+
     .left {
       display: flex;
       align-items: center;
@@ -25,11 +31,32 @@
       img {
         height: 25px;
         margin-right: 40px;
+
+        @include mobile {
+          display: none;
+        }
       }
 
       span {
         cursor: pointer;
         margin-right: 20px;
+
+        @include tab {
+          display: none;
+        }
+
+        &.shows,
+        &.showall {
+          @include tab {
+            display: block;
+          }
+        }
+
+        &.showall {
+          @include mobile {
+            display: none;
+          }
+        }
       }
     }
 
@@ -67,6 +94,9 @@
             display: flex;
             flex-direction: column;
             position: absolute;
+            @include mobile {
+              right: 0px;
+            }
           }
         }
       }

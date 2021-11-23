@@ -9,9 +9,10 @@ import { useRef, useState } from "react";
 const List = ({ list }) => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [isMoved, setIsMoved] = useState(false);
+  const [clickLimit, setClickLimit] = useState(window.innerWidth / 230);
 
   const listRef = useRef();
-  const handleClick = (direction) => {
+  const handleClick = (direction, listItemCount) => {
     setIsMoved(true);
     let distance = listRef.current.getBoundingClientRect().x - 50;
 
@@ -19,7 +20,7 @@ const List = ({ list }) => {
       setSlideNumber(slideNumber - 1);
       listRef.current.style.transform = `translateX(${distance + 230}px)`;
     }
-    if (direction === "right" && slideNumber < 4) {
+    if (direction === "right" && slideNumber < listItemCount - clickLimit) {
       setSlideNumber(slideNumber + 1);
       listRef.current.style.transform = `translateX(${distance - 230}px)`;
     }
@@ -31,7 +32,7 @@ const List = ({ list }) => {
       <div className="wrapper">
         <ArrowBackIosOutlined
           className="sliderArrow left"
-          onClick={() => handleClick("left")}
+          onClick={() => handleClick("left", list.content.length)}
           style={{ display: (!isMoved || slideNumber === 0) && "none" }}
         />
         <div className="container" ref={listRef}>
@@ -41,7 +42,7 @@ const List = ({ list }) => {
         </div>
         <ArrowForwardIosOutlined
           className="sliderArrow right"
-          onClick={() => handleClick("right")}
+          onClick={() => handleClick("right", list.content.length)}
         />
       </div>
     </div>

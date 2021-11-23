@@ -27,13 +27,13 @@ const Navbar = () => {
             alt=""
           />
           <Link to="/" className="link">
-            <span>Homepage</span>
+            <span className="showall">Homepage</span>
           </Link>
           <Link to="/series" className="link">
-            <span>Series</span>
+            <span className="shows">Series</span>
           </Link>
           <Link to="/movies" className="link">
-            <span>Movies</span>
+            <span className="shows">Movies</span>
           </Link>
           <span>New and Popular</span>
           <span>My List</span>
