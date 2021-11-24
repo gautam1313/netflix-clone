@@ -45,7 +45,7 @@ const ListItem = ({ index, item }) => {
         <img src={movie?.imgSm} alt="" />
         {isHovered && (
           <>
-            <video crossOrigin="anonymous" src={trailer} autoPlay={true} loop />
+            <video src={movie?.trailer} autoPlay={true} muted loop />
             <div className="itemInfo">
               <div className="icons">
                 <PlayArrow className="icon" />

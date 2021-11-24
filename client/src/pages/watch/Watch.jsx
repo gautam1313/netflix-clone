@@ -4,9 +4,8 @@ import "./watch.scss";
 
 const Watch = () => {
   const location = useLocation();
-  console.log(location);
   const { movie } = location.state;
-  //{movie.video}
+
   return (
     <div className="watch">
       <Link to="/">
@@ -20,7 +19,7 @@ const Watch = () => {
         autoPlay
         progress="true"
         controls
-        src="/video/trailer.mp4"
+        src={movie.video}
       />
     </div>
   );
