@@ -40,7 +40,7 @@ const Featured = ({ type, setGenre }) => {
             <option value="Anime">Anime</option>
             <option value="Comedy">Comedy</option>
             <option value="crime">Crime</option>
-            <option value="Scifi">Sci-fi</option>
+            <option value="Superhero">Superhero</option>
             <option value="Anime">Animation</option>
             <option value="Sports">Drama</option>
             <option value="Action">Action</option>
